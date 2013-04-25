@@ -59,7 +59,13 @@
 
 \section{Logical Modeling}
 
-Logical modeling deals with gathering purpose requirements and converting those requirements into a model. The logical model revolves around the needs of the function, not the database, although the needs of the purpose are used to establish the needs of the database. The diagrams produced should show the processes and data that exists, as well as the relationships between business processes and data.
+User is a single person and this person can use multiple devices, overmore some devices can be represented by multiple unique indetificators (for instance phone number). That's why there is table ``collabms\_{}identificator'' which represents one indentificator and every user has zero or more identificators (relation 1:0..N).
+
+Every user can have messages targeting him and each message can be received to one or more users. This relation (M:N) is provided by ``collabms\_{}has\_{}message'' table. Messages have authors therefore message linking to user (relation 1:1).
+
+Hence users are able to invite others to painting room, there is ``collabms\_{}invitation'' table. Message can contain invitation so that message may link to invitation (0..1:1 relation). The table linking to ``collabms\_{}server'' (relation 1:1) because this table represents invitation to room on some  \emph{server}.
+
+The table ``collabms\_{}user\_{}has\_{}room\_{}shot'' provide M:N relation between users and room shots. Room shot is a save of room or its screenshot.
 
 \begin{figure}[h]
 	\centering
