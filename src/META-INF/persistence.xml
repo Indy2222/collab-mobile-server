@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="CollabMobileServerPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>cz.mgn.csmobile.persistence.Invitation</class>
+    <class>cz.mgn.csmobile.persistence.Message</class>
+    <class>cz.mgn.csmobile.persistence.Identificator</class>
+    <class>cz.mgn.csmobile.persistence.HasMessage</class>
+    <class>cz.mgn.csmobile.persistence.User_1</class>
+    <class>cz.mgn.csmobile.persistence.Server</class>
+    <class>cz.mgn.csmobile.persistence.RoomShot</class>
+    <class>cz.mgn.csmobile.persistence.User</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/collabms"/>
+      <property name="javax.persistence.jdbc.password" value="collabms"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="collabms"/>
+    </properties>
+  </persistence-unit>
+</persistence>

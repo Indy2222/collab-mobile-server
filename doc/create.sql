@@ -118,3 +118,13 @@ CREATE TABLE collabms_identificator (
 
 ALTER SEQUENCE collabms_identificator_id_seq
     OWNED BY collabms_identificator.identificator_id;
+
+CREATE TRIGGER check_message_trigger
+    AFTER DELETE ON collabms_has_message
+    FOR ROW
+    EXECUTE PROCEDURE check_messages();
+
+CREATE FUNCTION check_messages() RETURNS void AS $emp_stamp$
+    -- SQL LANGUAGE
+$emp_stamp$ LANGUAGE SQL;
+
