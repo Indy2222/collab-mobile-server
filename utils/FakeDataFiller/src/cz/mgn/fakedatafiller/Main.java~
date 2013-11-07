@@ -39,7 +39,7 @@ public class Main {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
 
-            generateUsers(stmt);
+            //generateUsers(stmt);
             generateMessages(stmt);
 
 //            String sql;

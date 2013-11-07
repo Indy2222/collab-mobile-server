@@ -11,10 +11,10 @@
     <class>cz.mgn.csmobile.persistence.RoomShot</class>
     <class>cz.mgn.csmobile.persistence.User</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/collabms"/>
-      <property name="javax.persistence.jdbc.password" value="collabms"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://krizik.felk.cvut.cz:5434/ds2013_76"/>
+      <property name="javax.persistence.jdbc.password" value="heslo_ds2013_76"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="collabms"/>
+      <property name="javax.persistence.jdbc.user" value="ds2013_76"/>
     </properties>
   </persistence-unit>
 </persistence>

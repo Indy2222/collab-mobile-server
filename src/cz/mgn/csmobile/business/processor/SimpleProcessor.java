@@ -13,7 +13,6 @@ import cz.mgn.csmobile.server.ClientConnectionInterface;
 import cz.mgn.csmobile.server.Dispetcher;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +21,6 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -105,25 +99,18 @@ public class SimpleProcessor implements ClientConnectionInterface {
     protected void processCommand(Node commandNode) {
         String nodeName = commandNode.getNodeName();
 
-        switch (nodeName) {
-            case XMLConstants.TAG_LOGIN:
-                processLogin(commandNode);
-                break;
-            case XMLConstants.TAG_REGISTER:
-                processRegister(commandNode);
-                break;
-            case XMLConstants.TAG_ADD_IDENTIFICATOR_PHONE_NUMBER:
-                processAddIdentificator(commandNode, Identificator.TYPE_PHONE_NUMBER);
-                break;
-            case XMLConstants.TAG_SEARCH_IDENTIFICATOR_PHONE_NUMBER:
-                processSearchIdentificator(commandNode, Identificator.TYPE_PHONE_NUMBER);
-                break;
-            case XMLConstants.TAG_SEND_MESSAGE:
-                sendMessage(commandNode);
-                break;
-            case XMLConstants.TAG_GET_MESSAGES:
-                getMessages(commandNode);
-                break;
+        if (XMLConstants.TAG_LOGIN.equals(nodeName)) {
+            processLogin(commandNode);
+        } else if (XMLConstants.TAG_REGISTER.equals(nodeName)) {
+            processRegister(commandNode);
+        } else if (XMLConstants.TAG_ADD_IDENTIFICATOR_PHONE_NUMBER.equals(nodeName)) {
+            processAddIdentificator(commandNode, Identificator.TYPE_PHONE_NUMBER);
+        } else if (XMLConstants.TAG_SEARCH_IDENTIFICATOR_PHONE_NUMBER.equals(nodeName)) {
+            processSearchIdentificator(commandNode, Identificator.TYPE_PHONE_NUMBER);
+        } else if (XMLConstants.TAG_MESSAGE.equals(nodeName)) {
+            sendMessage(commandNode);
+        } else if (XMLConstants.TAG_MESSAGES_LIST.equals(nodeName)) {
+            getMessages(commandNode);
         }
     }
 
@@ -141,12 +128,12 @@ public class SimpleProcessor implements ClientConnectionInterface {
         List<HasMessage> messages = userData.getMessages();
         for (HasMessage message : messages) {
             Element elm = doc.createElement(XMLConstants.TAG_MESSAGE);
-            
+
             elm.setAttribute(XMLConstants.PARAMETER_MESSAGE_AUTHOR, message.getMessageId().getAuthor().getNick());
             elm.setAttribute(XMLConstants.PARAMETER_MESSAGE_READED, "" + message.getReaded());
             elm.setAttribute(XMLConstants.PARAMETER_MESSAGE_TIME, "" + message.getMessageId().getTime().getTime());
             elm.setTextContent(message.getMessageId().getText());
-            
+
             tag.appendChild(elm);
         }
 
@@ -155,9 +142,12 @@ public class SimpleProcessor implements ClientConnectionInterface {
     }
 
     protected void sendMessage(Node node) {
+        System.out.println("a");
         if (!userData.isLoggedIn()) {
             return;
         }
+
+        System.out.println("b");
 
         ArrayList<String> targets = new ArrayList<String>();
         String text = "";
@@ -179,6 +169,7 @@ public class SimpleProcessor implements ClientConnectionInterface {
             }
         }
 
+        System.out.println("sending = " + text);
         userData.addChatMessage(text, targets);
     }
 
